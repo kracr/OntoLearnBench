@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[118]:
+# In[41]:
 
 
 import nltk
@@ -19,13 +19,13 @@ import pandas as pd
 import numpy as np
 
 
-# In[119]:
+# In[42]:
 
 
 #nlp.max_length = 20000000 #
 
 
-# In[120]:
+# In[43]:
 
 
 
@@ -35,7 +35,7 @@ def readfile(file):
  return text
 
 
-# In[121]:
+# In[44]:
 
 
 def lower_case(tokens):
@@ -43,7 +43,7 @@ def lower_case(tokens):
     return normal_tokens
 
 
-# In[122]:
+# In[45]:
 
 
 def read_data(path):
@@ -52,14 +52,14 @@ def read_data(path):
     return df
 
 
-# In[123]:
+# In[46]:
 
 
-#resultfolder='D:/benchmark/cikmresult/'
-#path ='D:/benchmark/final_data/test.csv'
+resultfolder='D:/benchmark/cikmresult/'
+path ='D:/benchmark/final_data/test.csv'
 
-resultfolder = input("Enter folder to save results:")
-path=input("Enter path to csv file")
+#resultfolder = input("Enter folder to save results:")
+#path=input("Enter path to csv file")
 
 
 data = read_data(path)
@@ -68,7 +68,7 @@ data = read_data(path)
 #display(data.head())
 
 
-# In[124]:
+# In[47]:
 
 
 import pandas as pd
@@ -76,7 +76,7 @@ import random
 #display(data['target_text'])
 
 
-# In[125]:
+# In[48]:
 
 
 
@@ -95,7 +95,7 @@ for i in data['target_text']:
     pass
 
 
-# In[126]:
+# In[49]:
 
 
 
@@ -110,14 +110,14 @@ while("" in concat_list) :
     concat_list.remove("")
 
 
-# In[127]:
+# In[50]:
 
 
 ### extracts terms from the sentence
 
 terms=[]
 for i in data['target_text']:
-    tagged = nltk.pos_tag(nltk.word_tokenize(str(i)))
+    tagged = nltk.pos_tag(nltk.word_tokenize((i)))
     try:
         if(tagged[0][1]=='NNS' or tagged[0][1]=='NN'):     
            terms.append(tagged[0][0]) 
@@ -129,7 +129,7 @@ file.close()
 #print(terms)
 
 
-# In[128]:
+# In[51]:
 
 
 import nltk
@@ -192,52 +192,67 @@ with open(resultfolder+'//ClassnameOfIndividual.txt', 'w',encoding="utf-8") as f
 
 
 
-# In[129]:
+# In[ ]:
 
 
-def get_pos(string):
-    string = nltk.word_tokenize(string)
-    pos_string = nltk.pos_tag(string)
-    return pos_string
 
 
-with open(resultfolder+'//SubclassAxioms.txt', 'w',encoding="utf-8") as f:      
 
- for i in range(0,len(sent)):
-    pos=get_pos(str(sent[i]))
-    try:
-        if(pos[i][1]=='NNP' and pos[i+1][1]=='VBZ' and pos[i+2][1]=='DT' and pos[i+3][1]=='NN'):
-            print(sentee)
-            print('SubClassOf(',pos[i][1],pos[i+3][0],')',file=f)
-
-        if(pos[i][1]=='NNP' and pos[i+1][1]=='VBZ' and pos[i+2][1]=='DT' and pos[i+3][1]=='JJ'):
-            print(sentee)
-            print('SubClassOf(',pos[i][1],pos[i+3][0],')',file=f)
-
-        if(pos[i][1]=='NNP' and pos[i+1][1]=='VBZ' and pos[i+2][1]=='DT' and pos[i+3][1]=='NN'):
-            print(sentee)
-            print('SubClassOf(',pos[i][1],pos[i+3][0],')',file=f)
-
-        if(pos[i][1]=='NNP' and pos[i+1][1]=='VBZ' and pos[i+2][1]=='PT' and pos[i+3][1]=='NN'):
-            print(sentee)
-            print('SubClassOf(',pos[i][1],pos[i+3][0],')',file=f)
-
-    except:
-        pass
-    
-
-    
-   
-   
+# In[71]:
 
 
-# In[130]:
+#Pattern wise searching for subclass axioms
+  
+import re
+tokens = nltk.word_tokenize(str(concat_list))
+
+# parts of speech tagging
+tagged = nltk.pos_tag(tokens)# Token and Tag
+
+with open(resultfolder+'//SubclassAxioms1.txt', 'w',encoding="utf-8") as f:
+ for tag in range(len(tagged)):
+   if(tag<len(tagged)-4):
+       if(tagged[tag][1]=='NNP' and tagged[tag+1][1]=='VBZ' and tagged[tag+2][1]=='NN' and tagged[tag+3][1]=='IN' and tagged[tag+4][1]=='JJ'):
+            a= tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',a,tagged[tag+4][0],')',file=f)
+       if(tagged[tag][1]=='NNP' and tagged[tag+1][1]=='VBZ' and tagged[tag+2][1]=='NN' and tagged[tag+3][1]=='IN' and tagged[tag+4][1]=='NN'):
+            b = tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',b,tagged[tag+4][0],')',file=f)
+       if(tagged[tag][1]=='NNP' and tagged[tag+1][1]=='VBZ' and tagged[tag+2][1]=='DT' and tagged[tag+3][1]=='NN'):
+            c = tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',c,tagged[tag+3][0],')',file=f)
+       if(tagged[tag][1]=='NNP' and tagged[tag+1][1]=='VBZ' and tagged[tag+2][1]=='DT' and tagged[tag+3][1]=='JJ'):
+            d = tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',d,tagged[tag+3][0],')',file=f)
+       if(tagged[tag][1]=='NNP' and tagged[tag+1][1]=='VBZ' and tagged[tag+2][1]=='PT' and tagged[tag+3][1]=='JJ'):
+            e = tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',e,tagged[tag+3][0],')',file=f)
+       if(tagged[tag][1]=='NN' and tagged[tag+1][1]=='VBZ' and tagged[tag+2][1]=='NNP'):
+            f = tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',e,tagged[tag+2][0],')',file=f)
+       if(tagged[tag][1]=='NNP' and tagged[tag+1][1]=='NNP' and tagged[tag+2][1]=='NN' and tagged[tag+3][1]=='VBZ' and tagged[tag+4][1]=='NNP'):
+            g = tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',g,tagged[tag+2][0],')',file=f)
+       if(tagged[tag][1]=='NNP' and tagged[tag+1][1]=='VBZ' and tagged[tag+2][1]=='NNP' and tagged[tag+3][1]=='IN' and tagged[tag+4][1]=='NNP'):
+            h = tagged[tag][0].lstrip('\'')
+            print('SubClassOf(',h,tagged[tag+4][0],')',file=f)
+                            
+           
+
+
+# In[ ]:
+
+
+
+
+
+# In[72]:
 
 
 from nltk.corpus import wordnet as wn
 
 
-# In[131]:
+# In[73]:
 
 
 def get_hypernyms(ent):
@@ -274,7 +289,7 @@ for x in sclass:
     if x not in subclass:
         subclass.append(x)
 #print(subclass)
-with open(resultfolder+'//SubclassAxioms.txt', 'w',encoding="utf-8") as f:      
+with open(resultfolder+'//SubclassAxioms1.txt', 'at',encoding="utf-8") as f:      
 
  try:
     for i in subclass:
@@ -291,7 +306,7 @@ f.close()
      
 
 
-# In[132]:
+# In[74]:
 
 
 #for ine in sent:
@@ -310,6 +325,34 @@ f.close()
    #print(x[0],',',ent.text)
    
      
+
+
+# In[76]:
+
+
+
+
+output_file = open(resultfolder+'//SubclassAxioms.txt', 'w',encoding="utf-8")
+
+import hashlib
+completed_lines_hash = set()
+
+for line in open(resultfolder+'//SubclassAxioms1.txt', 'r',encoding="utf-8") :
+    hashValue = hashlib.md5(line.rstrip().encode('utf-8')).hexdigest()
+    
+    if hashValue not in completed_lines_hash:
+        output_file.write(line)
+        completed_lines_hash.add(hashValue)
+
+output_file.close()
+import os
+os.remove(resultfolder+'//SubclassAxioms1.txt')
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
