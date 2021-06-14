@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[41]:
+# In[11]:
 
 
 import nltk
@@ -19,13 +19,13 @@ import pandas as pd
 import numpy as np
 
 
-# In[42]:
+# In[12]:
 
 
 #nlp.max_length = 20000000 #
 
 
-# In[43]:
+# In[13]:
 
 
 
@@ -35,7 +35,7 @@ def readfile(file):
  return text
 
 
-# In[44]:
+# In[14]:
 
 
 def lower_case(tokens):
@@ -43,7 +43,7 @@ def lower_case(tokens):
     return normal_tokens
 
 
-# In[45]:
+# In[15]:
 
 
 def read_data(path):
@@ -52,14 +52,14 @@ def read_data(path):
     return df
 
 
-# In[46]:
+# In[16]:
 
 
-resultfolder='D:/benchmark/cikmresult/'
-path ='D:/benchmark/final_data/test.csv'
+#resultfolder='D:/benchmark/cikmresult/'
+#path ='D:/benchmark/final_data/test.csv'
 
-#resultfolder = input("Enter folder to save results:")
-#path=input("Enter path to csv file")
+resultfolder = input("Enter folder to save results:")
+path=input("Enter path to csv file")
 
 
 data = read_data(path)
@@ -68,7 +68,7 @@ data = read_data(path)
 #display(data.head())
 
 
-# In[47]:
+# In[17]:
 
 
 import pandas as pd
@@ -76,7 +76,7 @@ import random
 #display(data['target_text'])
 
 
-# In[48]:
+# In[18]:
 
 
 
@@ -95,7 +95,7 @@ for i in data['target_text']:
     pass
 
 
-# In[49]:
+# In[19]:
 
 
 
@@ -110,7 +110,7 @@ while("" in concat_list) :
     concat_list.remove("")
 
 
-# In[50]:
+# In[20]:
 
 
 ### extracts terms from the sentence
@@ -129,7 +129,7 @@ file.close()
 #print(terms)
 
 
-# In[51]:
+# In[ ]:
 
 
 import nltk
